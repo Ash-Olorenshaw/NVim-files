@@ -1,0 +1,18 @@
+{
+
+
+  // python config
+  
+  "pyright.enable": true,
+  "python.linting.mypyEnabled": true,
+
+  "python.pythonPath": "/venv/Scripts",
+  "python.linting.enabled": true,
+  "python.linting.pylintEnabled": true,
+
+  "pyright.inlayHints.functionReturnTypes" : false,
+  "pyright.inlayHints.variableTypes" : false,
+  "pyright.inlayHints.parameterTypes" : false
+  
+}
+
