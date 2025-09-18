@@ -1,6 +1,4 @@
 function common#load()
-	let mapleader = "\<Space>"
-
 	" Telescope
 	nnoremap <leader>fx <cmd>Explore<cr>
 	nnoremap <leader>ff <cmd>Telescope find_files<cr>
