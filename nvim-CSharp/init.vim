@@ -16,7 +16,8 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 Plug 'OmniSharp/omnisharp-vim'
 Plug 'dense-analysis/ale'
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Telescope
 Plug 'nvim-lua/plenary.nvim'
@@ -28,7 +29,7 @@ Plug 'cpea2506/one_monokai.nvim'
 
 call plug#end()
 
-let g:deoplete#enable_at_startup = 1
+" let g:deoplete#enable_at_startup = 1
 let g:OmniSharp_server_use_net6 = 1
 let g:OmniSharp_want_snippet=1
 let g:ale_linters = { 'cs': ['OmniSharp']}
@@ -54,15 +55,11 @@ nnoremap <C-n> :NERDTree<CR>
 nnoremap <C-t> :NERDTreeToggle<CR>
 nnoremap <C-f> :NERDTreeFind<CR>
 nnoremap <leader>pp :Porthole<CR>
-nnoremap <C-k> :OmniSharpDocumentation<CR>
-
-inoremap <expr> <TAB> pumvisible() ? "\<C-y>" : "\<CR>"
-inoremap <expr> <Esc> pumvisible() ? "\<C-e>" : "\<Esc>"
-inoremap <expr> <C-j> pumvisible() ? "\<C-n>" : "\<Down>"
-inoremap <expr> <C-k> pumvisible() ? "\<C-p>" : "\<Up>"
+nnoremap K :OmniSharpDocumentation<CR>
 
 autocmd VimEnter * NERDTree | wincmd p
-"
+call cocsetup#load()
+
 " Autocomplete suggestions, etc:
 function! CheckBackspace() abort
   let col = col('.') - 1
