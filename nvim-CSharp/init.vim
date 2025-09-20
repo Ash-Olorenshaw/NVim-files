@@ -16,6 +16,7 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 Plug 'OmniSharp/omnisharp-vim'
 Plug 'dense-analysis/ale'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 
 " Telescope
 Plug 'nvim-lua/plenary.nvim'
@@ -28,10 +29,12 @@ Plug 'cpea2506/one_monokai.nvim'
 call plug#end()
 
 let g:deoplete#enable_at_startup = 1
-
-let g:OmniSharp_server_stdio = 0
 let g:OmniSharp_server_use_net6 = 1
+let g:OmniSharp_want_snippet=1
 let g:ale_linters = { 'cs': ['OmniSharp']}
+" let g:UltiSnipsExpandTrigger="<tab>"
+" let g:UltiSnipsJumpForwardTrigger="<c-b>"
+" let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
 " fuzzy search:
 nnoremap <leader>fx <cmd>Explore<cr>
@@ -53,6 +56,11 @@ nnoremap <C-f> :NERDTreeFind<CR>
 nnoremap <leader>pp :Porthole<CR>
 nnoremap <C-k> :OmniSharpDocumentation<CR>
 
+inoremap <expr> <TAB> pumvisible() ? "\<C-y>" : "\<CR>"
+inoremap <expr> <Esc> pumvisible() ? "\<C-e>" : "\<Esc>"
+inoremap <expr> <C-j> pumvisible() ? "\<C-n>" : "\<Down>"
+inoremap <expr> <C-k> pumvisible() ? "\<C-p>" : "\<Up>"
+
 autocmd VimEnter * NERDTree | wincmd p
 "
 " Autocomplete suggestions, etc:
@@ -61,38 +69,35 @@ function! CheckBackspace() abort
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
-
-
 lua << EOF
+	require "nvim-surround".setup {}
 
-require "nvim-surround".setup {}
+	require 'nvim-treesitter.install'.prefer_git = false
 
-require 'nvim-treesitter.install'.prefer_git = false
+	-- Set colouring
+	require 'nvim-treesitter.configs'.setup {
+		ensure_installed = { "c_sharp", "lua", "vim", "vimdoc"},
 
--- Set colouring
-require 'nvim-treesitter.configs'.setup {
-	ensure_installed = { "csharp", "lua", "vim", "vimdoc"},
+		sync_install = false,
+		auto_install = true,
 
-	sync_install = false,
-	auto_install = true,
+		highlight = {
+			enable = true,
 
-	highlight = {
-		enable = true,
+			disable = function(lang, buf)
+				local max_filesize = 500 * 1024 -- 100 KB
+				local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+				if ok and stats and stats.size > max_filesize then
+					return true
+				end
+			end,
 
-		disable = function(lang, buf)
-			local max_filesize = 500 * 1024 -- 100 KB
-			local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
-			if ok and stats and stats.size > max_filesize then
-				return true
-			end
-		end,
+			additional_vim_regex_highlighting = false,
+		},
+	}
 
-		additional_vim_regex_highlighting = false,
-	},
-}
-
-vim.treesitter.language.register("markdown", "text")
-
+	vim.treesitter.language.register("markdown", "text")
+	vim.diagnostic.config({ virtual_text = true, virtual_lines = { current_line = true }, })
 EOF
 
 " turn line numbers on and disable word wrapping
@@ -105,7 +110,7 @@ set shiftwidth=4
 
 " set indent stuff
 set list
-set listchars=tab: ➢\ 
+set listchars=tab:➢\ 
 " ➔\ 
 " ➫\ 
 " ➢\ 
