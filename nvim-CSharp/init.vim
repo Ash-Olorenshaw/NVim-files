@@ -14,9 +14,9 @@ Plug 'jiangmiao/auto-pairs'
 
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
+" LSP
 Plug 'OmniSharp/omnisharp-vim'
 Plug 'dense-analysis/ale'
-" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Telescope
@@ -25,17 +25,15 @@ Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.6' }
 Plug 'ash-olorenshaw/porthole.nvim'
 
 " Pretty colours
-Plug 'cpea2506/one_monokai.nvim'
+Plug 'AlexvZyl/nordic.nvim', { 'branch': 'main' }
 
 call plug#end()
 
-" let g:deoplete#enable_at_startup = 1
 let g:OmniSharp_server_use_net6 = 1
 let g:OmniSharp_want_snippet=1
 let g:ale_linters = { 'cs': ['OmniSharp']}
-" let g:UltiSnipsExpandTrigger="<tab>"
-" let g:UltiSnipsJumpForwardTrigger="<c-b>"
-" let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+let mapleader = "\<Space>"
 
 " fuzzy search:
 nnoremap <leader>fx <cmd>Explore<cr>
@@ -97,33 +95,19 @@ lua << EOF
 	vim.diagnostic.config({ virtual_text = true, virtual_lines = { current_line = true }, })
 EOF
 
-" turn line numbers on and disable word wrapping
 set number
 set wrap!
 
-" make tabs/indents = 4 space width
 set tabstop=4
 set shiftwidth=4
 
-" set indent stuff
 set list
 set listchars=tab:➢\ 
-" ➔\ 
-" ➫\ 
-" ➢\ 
-" ☞\ 
-" →-
 
-" set leader char to be \
-let mapleader = "\<Space>"
-
-" Show NERDTree
 let NERDTreeShowHidden = 1
 
-" set colours
-colorscheme one_monokai
 set shell=pwsh
 command SplitTerminal :set splitbelow | split | resize 20 | term
 nnoremap <leader>t <cmd>SplitTerminal<cr>
 
-
+colorscheme nordic
