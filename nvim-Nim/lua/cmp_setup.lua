@@ -29,18 +29,12 @@ cmp.setup({
 -- Set up lspconfig.
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-require('lspconfig')['nim_langserver'].setup {
-    capabilities = capabilities
-}
+vim.lsp.config("*" {
+	capabilities = capabilities
+})
 
-require('lspconfig')['html'].setup {
-    capabilities = capabilities
-}
+vim.lsp.enable("nim_langserver")
+vim.lsp.enable("html")
+vim.lsp.enable("ccls")
+vim.lsp.enable("ts_ls")
 
-require('lspconfig')['cssls'].setup {
-    capabilities = capabilities
-}
-
-require('lspconfig')['ts_ls'].setup {
-    capabilities = capabilities
-}

@@ -26,14 +26,13 @@ cmp.setup({
     })
   })
 
-require('lspconfig')['html'].setup {
+vim.lsp.config('*', {
     capabilities = capabilities
-}
+})
 
-require('lspconfig')['cssls'].setup {
-    capabilities = capabilities
-}
-
-require('lspconfig')['tsserver'].setup {
-    capabilities = capabilities
-}
+vim.lsp.enable("cssls")
+vim.lsp.enable("tsserver")
+vim.lsp.enable("html")
+vim.lsp.enable("svelte")
+vim.lsp.enable("denols")
+vim.lsp.enable("vscode-eslint-language-server")

@@ -47,15 +47,10 @@ nnoremap <C-f> :NERDTreeFind<CR>
 
 autocmd VimEnter * NERDTree | wincmd p
 
-
-
 lua << EOF
 	require "ibl" .setup { indent = { char = "➔" } }
 	require "cmp_setup"
 	require "treesitter_setup"
-
-	local lspconfig = require "lspconfig"
-	lspconfig.fsautocomplete.setup({ cmd = { "/home/ao/.dotnet/tools/fsautocomplete", "--adaptive-lsp-server-enabled" } })
 
 	require "nvim-surround" .setup {}
 	require "gitsigns" .setup {}

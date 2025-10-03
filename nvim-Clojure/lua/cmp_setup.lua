@@ -28,7 +28,9 @@ cmp.setup({
 
 -- Set up lspconfig.
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
-require('lspconfig')['clojure_lsp'].setup {
+
+vim.lsp.config("clojure_lsp", {
     capabilities = capabilities,
 	filetypes = { "clojure", "clojure-dart", "edn" }
-}
+})
+vim.lsp.enable("clojure_lsp")

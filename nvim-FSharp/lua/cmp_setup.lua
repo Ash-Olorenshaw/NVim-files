@@ -28,6 +28,9 @@ cmp.setup({
 
 -- Set up lspconfig.
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
-require('lspconfig')['fsautocomplete'].setup {
-    capabilities = capabilities
-}
+
+vim.lsp.config("fsautocomplete", {
+    capabilities = capabilities,
+	cmd = { "/home/ao/.dotnet/tools/fsautocomplete", "--adaptive-lsp-server-enabled" }
+})
+vim.lsp.enable("fsautocomplete")

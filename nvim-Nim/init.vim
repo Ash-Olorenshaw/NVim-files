@@ -58,36 +58,13 @@ nnoremap <C-k> :Source<CR>
 nnoremap <leader>pp :Porthole<CR>
 
 lua << EOF
-
 	require "cmp_setup"
+	require "ts_setup"
 
 	require 'ibl'.setup {
 		indent = { char = "➢" },
 	}
 
-	require 'nvim-treesitter.install'.prefer_git = false
-	require 'nvim-treesitter.configs'.setup {
-		ensure_installed = { "c", "nim", "lua", "vim", "vimdoc"},
-		sync_install = false,
-		auto_install = true,
-
-        indent = {
-            enable = false
-        },
-
-		highlight = {
-			enable = true,
-			disable = function(lang, buf)
-				local max_filesize = 500 * 1024 -- 100 KB
-				local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
-				if ok and stats and stats.size > max_filesize then
-					return true
-				end
-			end,
-
-			additional_vim_regex_highlighting = false,
-		},
-	}
 	require "nvim-surround".setup {}
 	require "gitsigns".setup {}
 
@@ -119,9 +96,8 @@ lua << EOF
 		overrides = {},
 		color_overrides = {},
 	}
-	--vim.lsp.enable('nim_langserver')
-	vim.diagnostic.config({ virtual_text = true, virtual_lines = { current_line = true }, })
 
+	vim.diagnostic.config({ virtual_text = true, virtual_lines = { current_line = true }, })
 EOF
 
 set encoding=UTF-8

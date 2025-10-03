@@ -26,6 +26,8 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'lukas-reineke/indent-blankline.nvim', {'main': 'ibl'}
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/plenary.nvim'
+Plug 'pmizio/typescript-tools.nvim'
+
 Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.6' }
 
 Plug 'hrsh7th/cmp-nvim-lsp'
@@ -38,7 +40,7 @@ Plug 'hrsh7th/cmp-vsnip'
 Plug 'hrsh7th/vim-vsnip'
 
 " Plug 'Th3Whit3Wolf/space-nvim'
-" Plug 'vigoux/oak'
+Plug 'vigoux/oak'
 
 Plug 'ray-x/aurora'
 
@@ -82,138 +84,97 @@ let NERDTreeShowHidden = 1
 
 lua << EOF
 
+	local cmp = require'cmp'
 
-  local cmp = require'cmp'
+	cmp.setup({
+	snippet = {
+	  expand = function(args)
+		vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
+	  end,
+	},
+	window = {
+	},
+	mapping = cmp.mapping.preset.insert({
+	  ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+	  ['<C-f>'] = cmp.mapping.scroll_docs(4),
+	  ['<C-Space>'] = cmp.mapping.complete(),
+	  ['<C-e>'] = cmp.mapping.abort(),
+	  ['<CR>'] = cmp.mapping.confirm({ select = true }),
+	}),
+	sources = cmp.config.sources({
+	  { name = 'nvim_lsp' },
+	  { name = 'vsnip' },
+	}, {
+	  { name = 'buffer' },
+	})
+	})
 
-  cmp.setup({
-    snippet = {
-      -- REQUIRED - you must specify a snippet engine
-      expand = function(args)
-        vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
-      end,
-    },
-    window = {
-      -- completion = cmp.config.window.bordered(),
-      -- documentation = cmp.config.window.bordered(),
-    },
-    mapping = cmp.mapping.preset.insert({
-      ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-      ['<C-f>'] = cmp.mapping.scroll_docs(4),
-      ['<C-Space>'] = cmp.mapping.complete(),
-      ['<C-e>'] = cmp.mapping.abort(),
-      ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-    }),
-    sources = cmp.config.sources({
-      { name = 'nvim_lsp' },
-      { name = 'vsnip' }, -- For vsnip users.
-    }, {
-      { name = 'buffer' },
-    })
-  })
+	cmp.setup.cmdline({ '/', '?' }, {
+	mapping = cmp.mapping.preset.cmdline(),
+	sources = {
+	  { name = 'buffer' }
+	}
+	})
 
-  -- To use git you need to install the plugin petertriho/cmp-git and uncomment lines below
-  -- Set configuration for specific filetype.
-  --[[ cmp.setup.filetype('gitcommit', {
-    sources = cmp.config.sources({
-      { name = 'git' },
-    }, {
-      { name = 'buffer' },
-    })
- })
- require("cmp_git").setup() ]]-- 
-
-  -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
-  cmp.setup.cmdline({ '/', '?' }, {
-    mapping = cmp.mapping.preset.cmdline(),
-    sources = {
-      { name = 'buffer' }
-    }
-  })
-
-  -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
-  cmp.setup.cmdline(':', {
-    mapping = cmp.mapping.preset.cmdline(),
-    sources = cmp.config.sources({
-      { name = 'path' }
-    }, {
-      { name = 'cmdline' }
-    }),
-    matching = { disallow_symbol_nonprefix_matching = false }
-  })
+	cmp.setup.cmdline(':', {
+	mapping = cmp.mapping.preset.cmdline(),
+	sources = cmp.config.sources({
+	  { name = 'path' }
+	}, {
+	  { name = 'cmdline' }
+	}),
+	matching = { disallow_symbol_nonprefix_matching = false }
+	})
 
 
-  local capabilities = require('cmp_nvim_lsp').default_capabilities()
-  -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
+	local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-require "nvim-surround".setup {}
-require "gitsigns".setup {}
+	require "nvim-surround".setup {}
+	require "gitsigns".setup {}
 
-require 'nvim-treesitter.install'.prefer_git = false
+	require 'nvim-treesitter.install'.prefer_git = false
 
--- LSP setup
-local lspconfig = require('lspconfig')
--- lspconfig.phpactor.setup({
---     on_attach = on_attach,
---     capabilities = capabilities,
---     init_options = {
---         ["language_server_phpstan.enabled"] = false,
---         ["language_server_psalm.enabled"] = false,
---     }
--- 
--- })
--- LSP setup
-lspconfig.intelephense.setup({
-	capabilities = capabilities
-})
+	vim.lsp.enable('intelephense')
+	vim.lsp.enable('vue_ls')
 
-lspconfig.vuels.setup({
-  capabilities = capabilities,
-  -- add filetypes for typescript, javascript and vue
-  filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
-  init_options = {
-    vue = {
-      -- disable hybrid mode
-      hybridMode = false,
-    },
-  },
-})
+	require 'ibl'.setup {
+		indent = { char = "➢" },
+	}
 
-require 'ibl'.setup {
-    indent = { char = "➢" },
-}
+	require 'nvim-treesitter.configs'.setup {
+	  ensure_installed = { "lua", "vim", "vimdoc", "php", "dockerfile"},
+	  sync_install = false,
 
-require 'nvim-treesitter.configs'.setup {
-  ensure_installed = { "lua", "vim", "vimdoc", "php", "dockerfile"},
-  sync_install = false,
+	  auto_install = true,
 
-  auto_install = true,
+	  highlight = {
+		enable = true,
 
-  highlight = {
-    enable = true,
+		-- disable for large files
+		disable = function(lang, buf)
+			local max_filesize = 500 * 1024 -- 100 KB
+			local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+			if ok and stats and stats.size > max_filesize then
+				return true
+			end
+		end,
 
-    -- disable for large files
-    disable = function(lang, buf)
-        local max_filesize = 500 * 1024 -- 100 KB
-        local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
-        if ok and stats and stats.size > max_filesize then
-            return true
-        end
-    end,
+		additional_vim_regex_highlighting = false,
+	  },
+	}
 
-    additional_vim_regex_highlighting = false,
-  },
-}
+	-- parser for blade filetype
+	local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
+	parser_config.blade = {
+	  install_info = {
+		url = "https://github.com/EmranMR/tree-sitter-blade",
+		files = {"src/parser.c"},
+		branch = "main",
+	  },
+	  filetype = "blade"
+	}
 
--- parser for blade filetype
-local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
-parser_config.blade = {
-  install_info = {
-    url = "https://github.com/EmranMR/tree-sitter-blade",
-    files = {"src/parser.c"},
-    branch = "main",
-  },
-  filetype = "blade"
-}
+	vim.diagnostic.config({ virtual_text = true, virtual_lines = { current_line = true }, })
 
 EOF
 
@@ -223,9 +184,8 @@ augroup BladeFiltypeRelated
 augroup END
 
 " colorscheme space-nvim
-" colorscheme oak
-colorscheme aurora
-" set termwinsize=20x0
+colorscheme oak
+" colorscheme aurora
 
 set encoding=UTF-8
 

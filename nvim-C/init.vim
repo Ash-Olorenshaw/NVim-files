@@ -77,50 +77,14 @@ endfunction
 
 lua << EOF
 
-require "cmp_config"
--- Treesitter Start
-require 'nvim-treesitter.configs'.setup {
-	ensure_installed = { "c",  "cpp", "lua", "vim", "vimdoc" },
+	require "cmp_config"
+	require "ts_config"
 
-	sync_install = false,
-	auto_install = true,
+	require "nvim-surround".setup {}
+	require 'nvim-treesitter.install'.prefer_git = false
+	require "gitsigns" .setup {}
 
-	highlight = {
-		enable = true,
-
-		disable = function(lang, buf)
-			local max_filesize = 500 * 1024 -- 100 KB
-			local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
-			if ok and stats and stats.size > max_filesize then
-				return true
-			end
-		end,
-
-		additional_vim_regex_highlighting = false,
-	},
-}
-
-vim.treesitter.language.register("markdown", "text")
--- ensure for .mq4 files
-vim.treesitter.language.register("cpp", "mq4")
--- Treesitter End
-
--- LSP Start
-local lspconfig = require('lspconfig')
-lspconfig.clangd.setup({
-	cmd = {'clangd', '--background-index', '--clang-tidy', '--log=verbose'},
-	init_options = {
-		fallbackFlags = { '-std=c++17' },
-	},
-	filetypes = { "c", "cpp", "objc", "objcpp", "cuda", "proto" }
-})
--- LSP End
-
-require "nvim-surround".setup {}
-require 'nvim-treesitter.install'.prefer_git = false
-require "gitsigns" .setup {}
-
-vim.diagnostic.config({ virtual_text = true, virtual_lines = { current_line = true }, })
+	vim.diagnostic.config({ virtual_text = true, virtual_lines = { current_line = true }, })
 
 EOF
 

@@ -22,6 +22,8 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 call plug#end()
 
+let mapleader = "\<Space>"
+
 " fuzzy search:
 nnoremap <leader>fx <cmd>Explore<cr>
 nnoremap <leader>ff <cmd>Telescope find_files<cr>
@@ -51,41 +53,11 @@ endfunction
 
 
 lua << EOF
+	require "ts_setup"
+	require 'gitsigns' .setup {}
 
-    require('gitsigns').setup()
-
-    require "nvim-surround".setup {}
-
-    -- LSP setup
-    local lspconfig = require('lspconfig')
-    lspconfig.ols.setup({})
-
-    require 'nvim-treesitter.install'.prefer_git = false
-
-    require 'nvim-treesitter.configs'.setup {
-        ensure_installed = { "c", "lua", "vim", "vimdoc", "odin"},
-
-        sync_install = false,
-
-        auto_install = true,
-
-        highlight = {
-            enable = true,
-            -- disable treesitter highlighting if file is bigger than 100 KB
-
-            disable = function(lang, buf)
-                local max_filesize = 500 * 1024 -- 100 KB
-                local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
-                if ok and stats and stats.size > max_filesize then
-                    return true
-                end
-            end,
-
-
-            additional_vim_regex_highlighting = false,
-        },
-    }
-
+    require "nvim-surround" .setup {}
+	vim.lsp.enable("ols")
 EOF
 "
 " turn line numbers on and disable word wrapping
@@ -99,14 +71,6 @@ set shiftwidth=4
 " set indent stuff
 set list
 set listchars=tab:➢\ 
-" ➔\ 
-" ➫\ 
-" ➢\ 
-" ☞\ 
-" →-
-
-" set leader char to be \
-let mapleader = "\<Space>"
 
 " Show NERDTree
 let NERDTreeShowHidden = 1

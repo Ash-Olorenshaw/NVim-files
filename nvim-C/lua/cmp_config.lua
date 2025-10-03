@@ -26,8 +26,14 @@ cmp.setup({
     })
   })
 
--- Set up lspconfig.
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
-require('lspconfig')['fsautocomplete'].setup {
-    capabilities = capabilities
-}
+local lspconfig = require('lspconfig')
+vim.lsp.config("clangd", {
+	cmd = {'clangd', '--background-index', '--clang-tidy', '--log=verbose'},
+	init_options = {
+		fallbackFlags = { '-std=c++17' },
+	},
+	filetypes = { "c", "cpp", "objc", "objcpp", "cuda", "proto" }
+})
+
+vim.lsp.enable("clangd")
+

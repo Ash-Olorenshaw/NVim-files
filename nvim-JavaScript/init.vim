@@ -60,27 +60,6 @@ lua << EOF
 	  "ts=typescript"
 	}
 
-	local capabilities = require('cmp_nvim_lsp').default_capabilities()
-	local lspconfig = require('lspconfig')
-
-	lspconfig['svelte'].setup {
-		capabilities = capabilities
-	}
-
-	--require("typescript-tools").setup {
-	--	capabilities = capabilities
-	--}
-
-	lspconfig['vscode-eslint-language-server'].setup{
-		capabilities = capabilities
-	}
-	lspconfig['denols'].setup {
-		capabilities = capabilities
-	}
-	lspconfig['html'].setup{
-		capabilities = capabilities,
-	}
-
 	vim.diagnostic.config({ virtual_text = true, virtual_lines = { current_line = true }, })
 EOF
 
