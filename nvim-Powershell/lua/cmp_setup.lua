@@ -67,9 +67,11 @@ local on_attach = function(client, bufnr)
 	client.server_capabilities.semanticTokensProvider = nil
 end
 
-require("lspconfig").powershell_es.setup {
+vim.lsp.config("powershell_es", {
 	bundle_path = "/mnt/D-Files/lsp/PowerShellEditorServices",
 	filetypes = { "ps1", "psm1", "psd1" },
     capabilities = capabilities,
 	on_attach = on_attach
-}
+})
+
+vim.lsp.enable("powershell_es")

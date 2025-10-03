@@ -84,94 +84,13 @@ let NERDTreeShowHidden = 1
 
 lua << EOF
 
-	local cmp = require'cmp'
-
-	cmp.setup({
-	snippet = {
-	  expand = function(args)
-		vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
-	  end,
-	},
-	window = {
-	},
-	mapping = cmp.mapping.preset.insert({
-	  ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-	  ['<C-f>'] = cmp.mapping.scroll_docs(4),
-	  ['<C-Space>'] = cmp.mapping.complete(),
-	  ['<C-e>'] = cmp.mapping.abort(),
-	  ['<CR>'] = cmp.mapping.confirm({ select = true }),
-	}),
-	sources = cmp.config.sources({
-	  { name = 'nvim_lsp' },
-	  { name = 'vsnip' },
-	}, {
-	  { name = 'buffer' },
-	})
-	})
-
-	cmp.setup.cmdline({ '/', '?' }, {
-	mapping = cmp.mapping.preset.cmdline(),
-	sources = {
-	  { name = 'buffer' }
-	}
-	})
-
-	cmp.setup.cmdline(':', {
-	mapping = cmp.mapping.preset.cmdline(),
-	sources = cmp.config.sources({
-	  { name = 'path' }
-	}, {
-	  { name = 'cmdline' }
-	}),
-	matching = { disallow_symbol_nonprefix_matching = false }
-	})
-
-
-	local capabilities = require('cmp_nvim_lsp').default_capabilities()
-
+	require "ts_setup"
+	require "cmp_setup"
 	require "nvim-surround".setup {}
 	require "gitsigns".setup {}
 
-	require 'nvim-treesitter.install'.prefer_git = false
-
-	vim.lsp.enable('intelephense')
-	vim.lsp.enable('vue_ls')
-
 	require 'ibl'.setup {
 		indent = { char = "➢" },
-	}
-
-	require 'nvim-treesitter.configs'.setup {
-	  ensure_installed = { "lua", "vim", "vimdoc", "php", "dockerfile"},
-	  sync_install = false,
-
-	  auto_install = true,
-
-	  highlight = {
-		enable = true,
-
-		-- disable for large files
-		disable = function(lang, buf)
-			local max_filesize = 500 * 1024 -- 100 KB
-			local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
-			if ok and stats and stats.size > max_filesize then
-				return true
-			end
-		end,
-
-		additional_vim_regex_highlighting = false,
-	  },
-	}
-
-	-- parser for blade filetype
-	local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
-	parser_config.blade = {
-	  install_info = {
-		url = "https://github.com/EmranMR/tree-sitter-blade",
-		files = {"src/parser.c"},
-		branch = "main",
-	  },
-	  filetype = "blade"
 	}
 
 	vim.diagnostic.config({ virtual_text = true, virtual_lines = { current_line = true }, })

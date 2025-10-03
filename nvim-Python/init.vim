@@ -91,7 +91,6 @@ set wrap!
 let NERDTreeShowHidden = 1
 
 lua << EOF
-
 	require "porthole-nvim".setup {
 		width_ratio = 0.2,
 		height_ratio = 0.2,
@@ -107,35 +106,6 @@ lua << EOF
 	require 'ibl'.setup {
 		indent = { char = "➢" },
 	}
-
-	require 'nvim-treesitter.install'.prefer_git = false
-	require 'nvim-treesitter.configs'.setup {
-	  ensure_installed = { "c", "python", "lua", "vim", "vimdoc", "query", "php", "dockerfile"},
-
-	  sync_install = false,
-
-	  auto_install = true,
-	  indent = {
-		  enable = false
-	  },
-
-	  highlight = {
-		enable = true,
-
-		disable = function(lang, buf)
-			local max_filesize = 500 * 1024 -- 100 KB
-			local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
-			if ok and stats and stats.size > max_filesize then
-				return true
-			end
-		end,
-
-		additional_vim_regex_highlighting = false,
-	  },
-	}
-
-	vim.treesitter.language.register("dockerfile", "Dockerfile")
-
 EOF
 
 set encoding=UTF-8
