@@ -1,29 +1,24 @@
-
 call plug#begin('/mnt/D-Files/plugged')
+	Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
+	Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+	" Plug 'ionide/Ionide-vim'
 
-" LSP and language client
-Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
-Plug 'neovim/nvim-lspconfig'
-" Plug 'ionide/Ionide-vim'
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+	source ~/.config/nvim/common/common_setup.vim
+	source ~/.config/nvim/common/neotree_setup.vim
 
-source ~/.config/nvim/common/common_setup.vim
-source ~/.config/nvim/common/neotree_setup.vim
+	" AUTOCOMPLETION
+	Plug 'neovim/nvim-lspconfig'
+	Plug 'hrsh7th/cmp-nvim-lsp'
+	Plug 'hrsh7th/cmp-buffer'
+	Plug 'hrsh7th/cmp-path'
+	Plug 'hrsh7th/cmp-cmdline'
+	Plug 'hrsh7th/nvim-cmp'
 
-" color
-Plug 'EdenEast/nightfox.nvim'
+	Plug 'hrsh7th/cmp-vsnip'
+	Plug 'hrsh7th/vim-vsnip'
+	" see: https://github.com/hrsh7th/nvim-cmp for more details
 
-" AUTOCOMPLETION
-Plug 'neovim/nvim-lspconfig'
-Plug 'hrsh7th/cmp-nvim-lsp'
-Plug 'hrsh7th/cmp-buffer'
-Plug 'hrsh7th/cmp-path'
-Plug 'hrsh7th/cmp-cmdline'
-Plug 'hrsh7th/nvim-cmp'
-Plug 'hrsh7th/cmp-vsnip'
-Plug 'hrsh7th/vim-vsnip'
-" see: https://github.com/hrsh7th/nvim-cmp for more details
-
+	Plug 'EdenEast/nightfox.nvim'
 call plug#end()
 
 lua << EOF

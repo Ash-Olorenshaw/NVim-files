@@ -13,6 +13,11 @@ lua << EOF
 		pattern = { "*" },
 		callback = function()
 			require('neo-tree').setup({
+				filesystem = {
+					filtered_items = {
+						visible = true,
+					}
+				},
 				window = {
 					mappings = {
 						["h"] = function(state)
