@@ -2,6 +2,7 @@ call plug#begin('/mnt/D-Files/plugged')
 	Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 	source ~/.config/nvim/common/common_setup.vim
+	source ~/.config/nvim/common/cmp_setup.vim
 	source ~/.config/nvim/common/neotree_setup.vim
 
 	" LSP
@@ -16,19 +17,28 @@ call plug#begin('/mnt/D-Files/plugged')
 	Plug 'hrsh7th/vim-vsnip'
 	" END OF LSP
 
-	Plug 'PyGamer0/darc.nvim'
+	Plug 'Yazeed1s/oh-lucy.nvim'	
 call plug#end()
 
 autocmd BufNewFile,BufRead *.mq4 set filetype=mq4
 
 lua << EOF
-	require 'cmp_config'
 	require 'ts_config'
+
+	vim.lsp.config("clangd", {
+		capabilities = vim.g.cmp_capabilities,
+		cmd = {'clangd', '--background-index', '--clang-tidy', '--log=verbose', "--header-insertion=never"},
+		init_options = {
+			fallbackFlags = { '-std=c++17' },
+		},
+		filetypes = { "c", "cpp", "objc", "objcpp", "cuda", "proto" }
+	})
+
+	vim.lsp.enable("clangd")
 EOF
 
 
 set tabstop=4
 set shiftwidth=4
 
-colorscheme darc
-
+colorscheme oh-lucy

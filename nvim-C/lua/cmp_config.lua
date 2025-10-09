@@ -28,14 +28,3 @@ cmp.setup({
 
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-vim.lsp.config("clangd", {
-	capabilities = capabilities,
-	cmd = {'clangd', '--background-index', '--clang-tidy', '--log=verbose', "--header-insertion=never"},
-	init_options = {
-		fallbackFlags = { '-std=c++17' },
-	},
-	filetypes = { "c", "cpp", "objc", "objcpp", "cuda", "proto" }
-})
-
-vim.lsp.enable("clangd")
-
