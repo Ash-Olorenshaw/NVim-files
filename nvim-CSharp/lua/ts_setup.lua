@@ -20,4 +20,5 @@ require 'nvim-treesitter.configs'.setup {
 	},
 }
 
+require 'nvim-treesitter.install'.prefer_git = false
 vim.treesitter.language.register("markdown", "text")

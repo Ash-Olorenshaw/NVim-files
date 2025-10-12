@@ -1,91 +1,41 @@
 call plug#begin("/mnt/D-Files/plugged")
+	source ~/.config/nvim/common/common_setup.vim
+	source ~/.config/nvim/common/neotree_setup.vim
 
-Plug 'kylechui/nvim-surround'
-Plug 'Shougo/ddc.vim'
-Plug 'vim-denops/denops.vim'
-" nice infobar
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+	Plug 'ash-olorenshaw/porthole.nvim'
+	Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
-Plug 'scrooloose/nerdtree'
-Plug 'scrooloose/nerdcommenter'
+	" lsp
+	Plug 'OmniSharp/omnisharp-vim'
+	" lint
+	Plug 'dense-analysis/ale'
+	" completion
+	Plug 'ncm2/ncm2'
+    Plug 'roxma/nvim-yarp'
 
-Plug 'jiangmiao/auto-pairs'
-
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-
-" LSP
-Plug 'OmniSharp/omnisharp-vim'
-Plug 'dense-analysis/ale'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-
-" Telescope
-Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.6' }
-Plug 'ash-olorenshaw/porthole.nvim'
-
-" Pretty colours
-Plug 'AlexvZyl/nordic.nvim', { 'branch': 'main' }
-
+	Plug 'AlexvZyl/nordic.nvim', { 'branch': 'main' }
 call plug#end()
 
+" LSP
 let g:OmniSharp_server_use_net6 = 1
 let g:OmniSharp_want_snippet=1
+" lint
 let g:ale_linters = { 'cs': ['OmniSharp']}
+" completion
+autocmd BufEnter * call ncm2#enable_for_buffer()
+set completeopt=noinsert,menuone,noselect
+" info
+nnoremap K :OmniSharpDocumentation<CR>
 
 let mapleader = "\<Space>"
 
-" fuzzy search:
-nnoremap <leader>fx <cmd>Explore<cr>
-nnoremap <leader>ff <cmd>Telescope find_files<cr>
-nnoremap <leader>fg <cmd>Telescope live_grep<cr>
-nnoremap <leader>fb <cmd>Telescope buffers<cr>
-nnoremap <leader>fh <cmd>Telescope help_tags<cr>
-" end of fuzzy search
-
-" System keyboard copy
-noremap <C-c> "+y
-noremap <C-v> "+p
-
-" NERDTree cmds
-nnoremap <leader>n :NERDTreeFocus<CR>
-nnoremap <C-n> :NERDTree<CR>
-nnoremap <C-t> :NERDTreeToggle<CR>
-nnoremap <C-f> :NERDTreeFind<CR>
-nnoremap <leader>pp :Porthole<CR>
-nnoremap K :OmniSharpDocumentation<CR>
-
-autocmd VimEnter * NERDTree | wincmd p
-call cocsetup#load()
-
-" Autocomplete suggestions, etc:
-function! CheckBackspace() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-
 lua << EOF
 	require 'ts_setup'
-	require "nvim-surround".setup {}
-	require 'nvim-treesitter.install'.prefer_git = false
 
-	-- Set colouring
 	vim.diagnostic.config({ virtual_text = true, virtual_lines = { current_line = true }, })
 EOF
 
-set number
-set wrap!
-
 set tabstop=4
 set shiftwidth=4
-
-set list
-set listchars=tab:➢\ 
-
-let NERDTreeShowHidden = 1
-
-set shell=pwsh
-command SplitTerminal :set splitbelow | split | resize 20 | term
-nnoremap <leader>t <cmd>SplitTerminal<cr>
 
 colorscheme nordic
