@@ -1,35 +1,29 @@
-call plug#begin('/mnt/D-Files/plugged')
-	Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
-	Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-	" Plug 'ionide/Ionide-vim'
+source ~/.config/nvim/common/setup.vim
 
+call plug#begin(g:plugin_location)
 	source ~/.config/nvim/common/common_setup.vim
+	source ~/.config/nvim/common/cmp_setup.vim
 	source ~/.config/nvim/common/neotree_setup.vim
 
-	" AUTOCOMPLETION
+	Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
+	Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 	Plug 'neovim/nvim-lspconfig'
-	Plug 'hrsh7th/cmp-nvim-lsp'
-	Plug 'hrsh7th/cmp-buffer'
-	Plug 'hrsh7th/cmp-path'
-	Plug 'hrsh7th/cmp-cmdline'
-	Plug 'hrsh7th/nvim-cmp'
-
-	Plug 'hrsh7th/cmp-vsnip'
-	Plug 'hrsh7th/vim-vsnip'
-	" see: https://github.com/hrsh7th/nvim-cmp for more details
-
 	Plug 'EdenEast/nightfox.nvim'
 call plug#end()
 
 lua << EOF
-	require "cmp_setup"
 	require "treesitter_setup"
+
+	vim.lsp.config("fsautocomplete", {
+		capabilities = vim.g.cmp_capabilities,
+		cmd = { "/home/ao/.dotnet/tools/fsautocomplete", "--adaptive-lsp-server-enabled" }
+	})
+	vim.lsp.enable("fsautocomplete")
 EOF
 
-" set up the F# tab thing because it's a pain otherwise:
+" set up the F# tab = space thing
 set shiftwidth=4 smarttab
 set expandtab
 set tabstop=8 softtabstop=1
-
 
 colorscheme nordfox

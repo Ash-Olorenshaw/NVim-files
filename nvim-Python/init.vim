@@ -1,4 +1,6 @@
-call plug#begin("/mnt/D-Files/plugged")
+source ~/.config/nvim/common/setup.vim
+
+call plug#begin(g:plugin_location)
 	source ~/.config/nvim/common/common_setup.vim
 	source ~/.config/nvim/common/cmp_setup.vim
 	source ~/.config/nvim/common/neotree_setup.vim
