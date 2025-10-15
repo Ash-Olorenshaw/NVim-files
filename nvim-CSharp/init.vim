@@ -2,10 +2,10 @@ source ~/.config/nvim/common/setup.vim
 
 call plug#begin(g:plugin_location)
 	source ~/.config/nvim/common/common_setup.vim
+	source ~/.config/nvim/common/treesitter_setup.vim
 	source ~/.config/nvim/common/neotree_setup.vim
 
 	Plug 'ash-olorenshaw/porthole.nvim'
-	Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 	" lsp
 	Plug 'OmniSharp/omnisharp-vim'
@@ -34,7 +34,7 @@ nnoremap K :OmniSharpDocumentation<CR>
 let mapleader = "\<Space>"
 
 lua << EOF
-	require 'ts_setup'
+	TreesitterConfigure( { "c_sharp" }, true )
 
 	vim.diagnostic.config({ virtual_text = true, virtual_lines = { current_line = true }, })
 EOF

@@ -20,6 +20,3 @@ require 'nvim-treesitter.configs'.setup {
 	},
 }
 
-vim.treesitter.language.register("markdown", "text")
--- ensure for .mq4 files
-vim.treesitter.language.register("cpp", "mq4")

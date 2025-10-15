@@ -44,5 +44,4 @@ lua << EOF
 	})
 EOF
 
-echom "'neotree_setup' loaded"
 autocmd VimEnter * Neotree show

@@ -2,6 +2,7 @@ source ~/.config/nvim/common/setup.vim
 
 call plug#begin(g:plugin_location)
 	source ~/.config/nvim/common/common_setup.vim
+	source ~/.config/nvim/common/treesitter_setup.vim
 	source ~/.config/nvim/common/cmp_setup.vim
 	source ~/.config/nvim/common/neotree_setup.vim
 
@@ -12,7 +13,8 @@ call plug#end()
 autocmd BufNewFile,BufRead *.mq4 set filetype=mq4
 
 lua << EOF
-	require 'ts_config'
+	TreesitterConfigure({ "c",  "cpp", "lua", "vim", "vimdoc" }, true)
+	vim.treesitter.language.register("cpp", "mq4")
 
 	vim.lsp.config("clangd", {
 		capabilities = vim.g.cmp_capabilities,

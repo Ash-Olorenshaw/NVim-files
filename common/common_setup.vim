@@ -9,7 +9,6 @@ function CommonSetup()
 	lua require "ibl" .setup { indent = { char = "➔" } }
 	lua require "nvim-surround" .setup {}
 	lua require "gitsigns" .setup {}
-	echom "'common_setup' loaded."
 endfunction
 
 augroup common_setup

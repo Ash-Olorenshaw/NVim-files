@@ -2,11 +2,11 @@ source ~/.config/nvim/common/setup.vim
 
 call plug#begin(g:plugin_location)
 	source ~/.config/nvim/common/common_setup.vim
+	source ~/.config/nvim/common/treesitter_setup.vim
 	source ~/.config/nvim/common/cmp_setup.vim
 	source ~/.config/nvim/common/neotree_setup.vim
 
 	Plug 'ash-olorenshaw/porthole.nvim'
-	Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 	Plug 'neovim/nvim-lspconfig'
 	Plug 'Mofiqul/dracula.nvim'
 call plug#end()
@@ -18,7 +18,9 @@ let g:python3_host_prog = 'D:\Python\nvim-venv\venv\Scripts\python'
 nnoremap <leader>pp :Porthole<CR>
 
 lua << EOF
-	require 'ts_setup'
+	TreesitterConfigure( { "c", "python", "lua", "vim", "vimdoc", "query", "php", "dockerfile"}, false )
+	vim.treesitter.language.register("dockerfile", "Dockerfile")
+
 	vim.lsp.config("pyright", {
 		capabilities = vim.g.cmp_capabilities,
 	})

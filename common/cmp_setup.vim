@@ -42,5 +42,3 @@ lua << EOF
 		end
 	})
 EOF
-
-echom "'cmp_setup' loaded"
