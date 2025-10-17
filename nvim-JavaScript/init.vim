@@ -6,6 +6,7 @@ call plug#begin(g:plugin_location)
 	source ~/.config/nvim/common/cmp_setup.vim
 	source ~/.config/nvim/common/neotree_setup.vim
 
+	Plug 'windwp/nvim-ts-autotag'
 	Plug 'tanvirtin/monokai.nvim'
 call plug#end()
 
@@ -21,6 +22,8 @@ lua << EOF
 	vim.lsp.enable("svelte")
 	vim.lsp.enable("denols")
 	vim.lsp.enable("vscode-eslint-language-server")
+
+	require 'nvim-ts-autotag' .setup {}
 EOF
 
 set tabstop=4
