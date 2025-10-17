@@ -10,9 +10,6 @@ call plug#begin(g:plugin_location)
 call plug#end()
 
 lua << EOF
-	require "cmp_setup"
-	require "ts_setup"
-
 	require 'evergarden'.setup {
 		theme = {
 			variant = 'fall',
