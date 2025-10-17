@@ -7,11 +7,8 @@ call plug#begin(g:plugin_location)
 	source ~/.config/nvim/common/neotree_setup.vim
 
 	Plug 'ash-olorenshaw/porthole.nvim'
-	Plug 'neovim/nvim-lspconfig'
 	Plug 'Mofiqul/dracula.nvim'
 call plug#end()
-
-let mapleader = "\<Space>"
 
 let g:python3_host_prog = 'D:\Python\nvim-venv\venv\Scripts\python'
 " Porthole
@@ -26,7 +23,6 @@ lua << EOF
 	})
 
 	vim.lsp.enable("pyright")
-	vim.diagnostic.config({ virtual_text = true, virtual_lines = { current_line = true }, })
 
 	require "porthole-nvim".setup {
 		width_ratio = 0.2,

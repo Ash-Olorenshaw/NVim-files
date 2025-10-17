@@ -1,9 +1,7 @@
 
-vim.treesitter.language.register("clojure", "clojure-dart")
-
 require 'nvim-treesitter.install'.prefer_git = false
 require 'nvim-treesitter.configs'.setup {
-	ensure_installed = { "c", "clojure", "lua", "vim", "vimdoc", "query", "php", "dockerfile"},
+	ensure_installed = ,
 	sync_install = false,
 	auto_install = true,
 

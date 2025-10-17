@@ -1,41 +1,16 @@
-call plug#begin("/mnt/D-Files/plugged/")
-	Plug 'ash-olorenshaw/porthole.nvim'
+source ~/.config/nvim/common/setup.vim
 
-	Plug 'kylechui/nvim-surround'
-
-	Plug 'scrooloose/nerdtree'
-	Plug 'ryanoasis/vim-devicons'
-	Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-
-	Plug 'jiangmiao/auto-pairs'
-	Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-	Plug 'lukas-reineke/indent-blankline.nvim', {'main': 'ibl'}
-	Plug 'neovim/nvim-lspconfig'
-	Plug 'nvim-lua/plenary.nvim'
-	Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.6' }
+call plug#begin(g:plugin_location)
+	source ~/.config/nvim/common/common_setup.vim
+	source ~/.config/nvim/common/treesitter_setup.vim
+	source ~/.config/nvim/common/cmp_setup.vim
+	source ~/.config/nvim/common/neotree_setup.vim
 
 	Plug 'Yagua/nebulous.nvim'
-
-	" LSP
-	Plug 'neovim/nvim-lspconfig'
-	Plug 'hrsh7th/cmp-nvim-lsp'
-	Plug 'hrsh7th/cmp-buffer'
-	Plug 'hrsh7th/cmp-path'
-	Plug 'hrsh7th/cmp-cmdline'
-	Plug 'hrsh7th/nvim-cmp'
-
-	Plug 'hrsh7th/cmp-vsnip'
-	Plug 'hrsh7th/vim-vsnip'
-	" END OF LSP
 call plug#end()
-
-let mapleader = "\<Space>"
-
-call common#load()
 
 lua << EOF
 	require "cmp_setup"
-	require "ts_setup"
 
 	require("nebulous").setup {
 		variant = "midnight",
@@ -51,13 +26,22 @@ lua << EOF
 			variables  = true,
 		},
 	}
-
-	require "nvim-surround".setup {}
-
-	require 'ibl'.setup {
-		indent = { char = "➢" },
+	TreesitterConfigure( { "vim" }, false )
+	require("nvim-treesitter.parsers").get_parser_configs().powershell = {
+		install_info = {
+			url = "https://github.com/airbus-cert/tree-sitter-powershell",
+			branch = "main",
+			files = { "src/parser.c", "src/scanner.c" }
+		},
+		filetype = "ps1",
+		used_by = { "psm1", "psd1", "pssc", "psxml", "cdxml" }
 	}
 EOF
+
+set tabstop=4
+set shiftwidth=4
+syntax enable
+syntax on
 
 if (has("termguicolors"))
     set termguicolors

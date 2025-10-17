@@ -7,7 +7,6 @@ call plug#begin(g:plugin_location)
 	source ~/.config/nvim/common/neotree_setup.vim
 
 	Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
-	Plug 'neovim/nvim-lspconfig'
 	Plug 'EdenEast/nightfox.nvim'
 call plug#end()
 

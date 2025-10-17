@@ -7,6 +7,8 @@ Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/cmp-vsnip'
 Plug 'hrsh7th/vim-vsnip'
 
+Plug 'neovim/nvim-lspconfig'
+
 lua << EOF
 	vim.api.nvim_create_autocmd("VimEnter", {
 		pattern = { "*" },

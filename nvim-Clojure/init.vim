@@ -1,108 +1,36 @@
-call plug#begin("/mnt/D-Files/plugged")
+source ~/.config/nvim/common/setup.vim
 
-Plug 'kylechui/nvim-surround'
-Plug 'ash-olorenshaw/porthole.nvim'
+call plug#begin(g:plugin_location)
+	source ~/.config/nvim/common/common_setup.vim
+	source ~/.config/nvim/common/treesitter_setup.vim
+	source ~/.config/nvim/common/cmp_setup.vim
+	source ~/.config/nvim/common/neotree_setup.vim
 
-Plug 'tpope/vim-fireplace'
+	Plug 'stevearc/dressing.nvim'
+	Plug 'nvim-flutter/flutter-tools.nvim'
+	Plug 'tpope/vim-fireplace'
 
-" NERDTree and icons
-Plug 'scrooloose/nerdtree'
-Plug 'ryanoasis/vim-devicons'
-Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-Plug 'lukas-reineke/indent-blankline.nvim', {'main': 'ibl'}
-
-Plug 'jiangmiao/auto-pairs'
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.6' }
-
-Plug 'lukas-reineke/indent-blankline.nvim', {'main': 'ibl'}
-" Flutter
-Plug 'stevearc/dressing.nvim' " optional for vim.ui.select
-Plug 'nvim-flutter/flutter-tools.nvim'
-"
-" AUTOCOMPLETION
-Plug 'neovim/nvim-lspconfig'
-Plug 'hrsh7th/cmp-nvim-lsp'
-Plug 'hrsh7th/cmp-buffer'
-Plug 'hrsh7th/cmp-path'
-Plug 'hrsh7th/cmp-cmdline'
-Plug 'hrsh7th/nvim-cmp'
-Plug 'hrsh7th/cmp-vsnip'
-Plug 'hrsh7th/vim-vsnip'
-" see: https://github.com/hrsh7th/nvim-cmp for more details
-
-" Potential other theme:
-Plug 'pappasam/papercolor-theme-slim'
-
+	Plug 'pappasam/papercolor-theme-slim'
 call plug#end()
 
-let mapleader = "\<Space>"
-
-" fuzzy search:
-nnoremap <leader>fx <cmd>Explore<cr>
-nnoremap <leader>ff <cmd>Telescope find_files<cr>
-nnoremap <leader>fg <cmd>Telescope live_grep<cr>
-nnoremap <leader>fb <cmd>Telescope buffers<cr>
-nnoremap <leader>fh <cmd>Telescope help_tags<cr>
-nnoremap <A-x> :lua require'telescope.actions'.file_vsplit()<cr>
-" end of fuzzy search
-
-" System keyboard copy
-noremap <C-c> "+y
-noremap <C-v> "+p
-
-" NERDTree cmds
-nnoremap <leader>n :NERDTreeFocus<CR>
-nnoremap <C-n> :NERDTree<CR>
-nnoremap <C-t> :NERDTreeToggle<CR>
-nnoremap <C-f> :NERDTreeFind<CR>
-
-nnoremap <C-k> :Source<CR>
-
-" Porthole
-nnoremap <leader>pp :Porthole<CR>
-
 lua << EOF
+	TreesitterConfigure({ "clojure" }, false)
+	vim.treesitter.language.register("clojure", "clojure-dart")
 
-	require "cmp_setup"
-	require "ts_setup"
+	vim.lsp.config("clojure_lsp", {
+		capabilities = vim.g.cmp_capabilities,
+		filetypes = { "clojure", "clojure-dart", "edn" }
+	})
 
-	require 'ibl'.setup {
-		indent = { char = "➢" },
-	}
-
-	require "nvim-surround".setup {}
-
-	require "porthole-nvim".setup {
-		width_ratio = 0.2,
-		height_ratio = 0.2,
-		quit_key = 'q',
-		reload_key = 'r',
-		action_key = '<CR>',
-		use_icons = true
-	}
-	
+	vim.lsp.enable("clojure_lsp")
 EOF
 
 set encoding=UTF-8
-
 autocmd BufNewFile,BufRead *.cljd set filetype=clojure-dart
-
-set number
-set wrap!
-set list
 
 set tabstop=4
 set shiftwidth=4
 set noexpandtab
 set nosmartindent
-
-au VimEnter *  NERDTree
-let NERDTreeShowHidden = 1
-
-set shell=pwsh
-command SplitTerminal :set splitbelow | split | resize 20 | term
-nnoremap <leader>t <cmd>SplitTerminal<cr>
 
 colorscheme PaperColorSlim
