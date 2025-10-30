@@ -4,11 +4,13 @@ Plug 'lewis6991/gitsigns.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.6' }
 Plug 'lukas-reineke/indent-blankline.nvim', {'main': 'ibl'}
+Plug 'numToStr/Comment.nvim'
 
 function CommonSetup()
 	lua require "ibl" .setup { indent = { char = "➔" } }
 	lua require "nvim-surround" .setup {}
 	lua require "gitsigns" .setup {}
+	lua require 'Comment' .setup {}
 endfunction
 
 augroup common_setup

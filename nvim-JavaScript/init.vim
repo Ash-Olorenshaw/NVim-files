@@ -17,11 +17,11 @@ lua << EOF
 	vim.lsp.config('*', { capabilities = vim.g.cmp_capabilities })
 
 	vim.lsp.enable("cssls")
-	vim.lsp.enable("tsserver")
+	vim.lsp.enable("ts_ls")
 	vim.lsp.enable("html")
 	vim.lsp.enable("svelte")
 	vim.lsp.enable("denols")
-	vim.lsp.enable("vscode-eslint-language-server")
+	vim.lsp.enable("eslint")
 
 	require 'nvim-ts-autotag' .setup {}
 EOF
