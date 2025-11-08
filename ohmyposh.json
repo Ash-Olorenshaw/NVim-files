@@ -1,0 +1,71 @@
+{
+	"$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
+	"blocks": [
+		{
+			"alignment": "left",
+			"segments": [
+				{
+					"background": "transparent",
+					"foreground": "#EAE1DF",
+					"properties": {
+						"style": "full"
+					},
+					"style": "plain",
+					"template": "{{ if .Env.NVIM_APPNAME }}<#D264B6>  {{ .Env.NVIM_APPNAME }}</> -{{ end }}",
+					"type": "path"
+				},
+				{
+				  "background": "transparent",
+				  "foreground": "#EAE1DF",
+				  "properties": {
+					"folder_separator_icon": " <#81F499> ></> ",
+					"style": "full"
+				  },
+				  "style": "plain",
+				  "template": " {{ .Path }}",
+				  "type": "path"
+				},
+				{
+				  "type": "project",
+				  "style": "plain",
+				  "foreground": "#EAE1DF",
+				  "background": "transparent",
+				  "template": "{{ if or .Version .Name }} - <#DE8F6E>{{ if .Version }} {{.Version}} {{ end }}{{ if .Name }}{{ .Name }}{{ end }}{{ end }}</>"
+				},
+				{
+					"background": "transparent",
+					"foreground": "#EAE1DF",
+					"properties" : {
+						"fetch_status" : true
+					},
+					"style": "plain",
+					"template": " - <#2D93AD>{{ .UpstreamIcon }}{{ .HEAD }}{{ if gt .StashCount 0 }} {{ .StashCount }}{{ end }}</>{{ if .Working.Changed }} <#d11919>-{{ .Working.Deleted }}</> <#29800a>+{{ .Working.Added }}</> <#d19719>~{{ .Working.Modified }}</>{{ end }}",
+					"type": "git"
+				}
+			],
+			"type": "prompt"
+		},
+		{
+    		"alignment": "left",
+			"newline": true,
+    		"segments": [
+				{
+					"type": "python",
+					"style": "plain",
+					"foreground": "#EAE1DF",
+					"background": "transparent",
+					"template": "(<#e0ab2f> </>{{ if .Venv }}{{ .Venv }}{{ end }})"
+				},
+				{
+					"background": "transparent",
+					"foreground": "#EAE1DF",
+					"style": "plain",
+					"template": " : ",
+					"type": "text"
+				}
+    		],
+    		"type": "prompt"
+    	}
+	],
+	"version": 3
+}

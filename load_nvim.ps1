@@ -62,3 +62,21 @@ function unsetnvim {
 	    $env:NVIM_APPNAME = "" 
 	    Write-Host "NeoVim environment successfully unset. " 
 }
+
+oh-my-posh init pwsh --config "~/.config/nvim/ohmyposh.json" | Invoke-Expression
+
+$function:__old_prompt_func = $function:prompt
+
+function prompt {
+	__old_prompt_func
+	if ($env:NVIM_APPNAME) {
+		$new_window_title = "`#[fg=#D264B6]$($env:NVIM_APPNAME.Split("/")[-1].Split("-")[-1])`#[fg=#EAE1DF] - "
+	}
+	else {
+		$new_window_title = ""
+	}
+	$new_window_title += "$(Split-Path -Path $PWD -Leaf)"
+	$Host.UI.RawUI.WindowTitle = $new_window_title
+}
+
+
