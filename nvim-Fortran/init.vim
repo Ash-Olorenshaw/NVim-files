@@ -8,6 +8,8 @@ call plug#begin(g:plugin_location)
 
 	Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 	Plug 'nyoom-engineering/oxocarbon.nvim'
+	Plug 'aliqyan-21/darkvoid.nvim'
+	Plug 'jacoborus/tender.vim'
 call plug#end()
 
 lua << EOF
@@ -19,4 +21,6 @@ EOF
 set tabstop=4
 set shiftwidth=4
 
-colorscheme oxocarbon
+set termguicolors
+syntax enable
+colorscheme tender
