@@ -58,6 +58,11 @@ function nnvim {
 	    Write-Host "NeoVim environment set for Nim " 
 }
 
+function fornvim { 
+	    $env:NVIM_APPNAME = "nvim/nvim-Fortran" 
+	    Write-Host "NeoVim environment set for Fortran " 
+}
+
 function unsetnvim { 
 	    $env:NVIM_APPNAME = "" 
 	    Write-Host "NeoVim environment successfully unset. " 
