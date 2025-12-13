@@ -14,6 +14,15 @@ call plug#end()
 
 lua << EOF
 	TreesitterConfigure({ "fortran" }, true)
+	vim.lsp.config('fortls', { 
+			capabilities = vim.g.cmp_capabilities,
+			cmd = {
+				"fortls", "--notify_init", "--hover_signature",
+				"--hover_language=fortran",
+				"--lowercase_intrinsics", "--use_signature_help"
+			}
+		}
+	)
 	vim.lsp.enable("fortls")
 EOF
 
