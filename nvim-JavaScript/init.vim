@@ -12,7 +12,7 @@ call plug#end()
 
 lua << EOF
 	vim.g.markdown_fenced_languages = { "ts=typescript" }
-	TreesitterConfigure( { "lua", "svelte", "html", "typescript", "css", "javascript", "markdown", "yaml" }, false )
+	TreesitterConfigure({ "lua", "svelte", "html", "typescript", "css", "javascript", "markdown", "yaml" })
 
 	vim.lsp.config('*', { capabilities = vim.g.cmp_capabilities })
 

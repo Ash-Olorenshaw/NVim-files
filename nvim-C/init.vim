@@ -13,7 +13,7 @@ call plug#end()
 autocmd BufNewFile,BufRead *.mq4 set filetype=mq4
 
 lua << EOF
-	TreesitterConfigure({ "c",  "cpp", "lua", "vim", "vimdoc" }, true)
+	TreesitterConfigure({ "c",  "cpp", "lua", "vim", "vimdoc" })
 	vim.treesitter.language.register("cpp", "mq4")
 
 	vim.lsp.config("clangd", {

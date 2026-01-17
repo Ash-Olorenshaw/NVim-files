@@ -15,7 +15,7 @@ let g:python3_host_prog = 'D:\Python\nvim-venv\venv\Scripts\python'
 nnoremap <leader>pp :Porthole<CR>
 
 lua << EOF
-	TreesitterConfigure( { "c", "python", "lua", "vim", "vimdoc", "query", "php", "dockerfile"}, false )
+	TreesitterConfigure({ "c", "python", "lua", "vim", "vimdoc", "query", "php", "dockerfile"})
 	vim.treesitter.language.register("dockerfile", "Dockerfile")
 
 	vim.lsp.config("pyright", {

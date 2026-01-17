@@ -14,7 +14,7 @@ call plug#begin(g:plugin_location)
 call plug#end()
 
 lua << EOF
-	TreesitterConfigure({ "clojure" }, false)
+	TreesitterConfigure({ "clojure" })
 	vim.treesitter.language.register("clojure", "clojure-dart")
 
 	vim.lsp.config("clojure_lsp", {

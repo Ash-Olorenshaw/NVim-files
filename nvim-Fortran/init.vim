@@ -13,7 +13,7 @@ call plug#begin(g:plugin_location)
 call plug#end()
 
 lua << EOF
-	TreesitterConfigure({ "fortran" }, true)
+	TreesitterConfigure({ "fortran" })
 	vim.lsp.config('fortls', { 
 			capabilities = vim.g.cmp_capabilities,
 			cmd = {

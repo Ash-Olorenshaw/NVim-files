@@ -39,7 +39,7 @@ lua << EOF
 		color_overrides = {},
 	}
 
-	TreesitterConfigure({ "nim", "html", "css", "typescript", "javascript" }, false)
+	TreesitterConfigure({ "nim", "html", "css", "typescript", "javascript" })
 
 	vim.lsp.config("*", {
 		capabilities = vim.g.cmp_capabilities,

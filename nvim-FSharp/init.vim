@@ -11,18 +11,7 @@ call plug#begin(g:plugin_location)
 call plug#end()
 
 lua << EOF
-	TreesitterConfigure( { "markdown" }, true )
-
-	require('nvim-treesitter.parsers').get_parser_configs().fsharp = {
-		install_info = {
-			url = 'https://github.com/ionide/tree-sitter-fsharp',
-			branch = 'main',
-			files = { 'src/scanner.c', 'src/parser.c' },
-			location = "fsharp"
-		},
-		requires_generate_from_grammar = false,
-		filetype = 'fsharp',
-	}
+	TreesitterConfigure({ "markdown", "fsharp" })
 
 	vim.lsp.config("fsautocomplete", {
 		capabilities = vim.g.cmp_capabilities,

@@ -34,8 +34,7 @@ nnoremap K :OmniSharpDocumentation<CR>
 let mapleader = "\<Space>"
 
 lua << EOF
-	TreesitterConfigure( { "c_sharp" }, true )
-
+	TreesitterConfigure({ "c_sharp" })
 	vim.diagnostic.config({ virtual_text = true, virtual_lines = { current_line = true }, })
 EOF
 

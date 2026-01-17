@@ -11,15 +11,7 @@ call plug#end()
 
 lua << EOF
 	vim.g.markdown_fenced_languages = { "ts=typescript" }
-	TreesitterConfigure( { "php", "dockerfile" }, false )
-	require "nvim-treesitter.parsers".get_parser_configs().blade = {
-		install_info = {
-			url = "https://github.com/EmranMR/tree-sitter-blade",
-			files = { "src/parser.c" },
-			branch = "main",
-		},
-		filetype = "blade"
-	}
+	TreesitterConfigure({ "php", "dockerfile", "blade" })
 
 	vim.lsp.config('*', { capabilities = vim.g.cmp_capabilities })
 	local vue_language_server_path = '/usr/local/lib/node_modules/@vue/language-server'
